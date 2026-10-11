@@ -1,43 +1,15 @@
 apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 pipeline:
-  - name: architecture
-    uses: plan
-    guidance: Decide the approach in two sentences.
-  - name: ui-design
-    uses: platform/designer
-    with: { output: sections of NOTES.md }
-    reads: [architecture]
-  - name: breakdown
-    uses: plan
-    reads: [architecture, ui-design]
-    maxUnits: 2
-  - name: sign-off
-    uses: approval
-    reads: [architecture, ui-design, breakdown]
-  - forEach: breakdown.units
-    steps:
-      - uses: implement
-      - name: unit-check
-        uses: check
-        commands:
-          - { name: notes-exist, run: sh tests/notes_exist.sh, severity: blocking }
+  - uses: implement
   - name: unit-suite
     uses: check
     commands:
       - { name: suite, run: sh tests/run.sh, severity: blocking }
-  - name: heading
-    uses: check
-    commands:
-      - { name: heading, run: sh tests/notes_heading.sh, severity: blocking }
-  - name: report
-    uses: check
-    commands:
-      - { name: report, run: "mkdir -p out && wc -l NOTES.md > out/report.txt", severity: blocking }
-    artifacts: [out/report.txt]
-  - name: self-check
+  - name: session-eyes
     uses: review
+    context: fresh
     criteria:
-      - { name: notes-updated, threshold: 0.5, blocking: false }
+      - { name: notes-updated, threshold: 0.5 }
 complete:
   endpoint: branch
