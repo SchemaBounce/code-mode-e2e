@@ -30,6 +30,10 @@ pipeline:
     uses: check
     commands:
       - { name: heading, run: sh tests/notes_heading.sh, severity: blocking }
+  - name: never-passes
+    uses: check
+    commands:
+      - { name: impossible, run: "test -f /nonexistent/never-exists", severity: blocking }
   - name: report
     uses: check
     commands:
