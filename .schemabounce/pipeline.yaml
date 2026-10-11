@@ -1,20 +1,13 @@
 apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 pipeline:
-  - name: architecture
-    uses: plan
-    guidance: Decide the approach in two sentences.
-  - name: ui-design
-    uses: platform/designer
-    with: { output: sections of NOTES.md }
-    reads: [architecture]
   - name: breakdown
     uses: plan
-    reads: [architecture, ui-design]
-    maxUnits: 2
+    maxUnits: 3
+    guidance: Plan at most three small units. Each unit edits NOTES.md or adds one file under docs/.
   - name: sign-off
     uses: approval
-    reads: [architecture, ui-design, breakdown]
+    reads: [breakdown]
   - forEach: breakdown.units
     steps:
       - uses: implement
@@ -30,11 +23,6 @@ pipeline:
     uses: check
     commands:
       - { name: heading, run: sh tests/notes_heading.sh, severity: blocking }
-  - name: report
-    uses: check
-    commands:
-      - { name: report, run: "mkdir -p out && wc -l NOTES.md > out/report.txt", severity: blocking }
-    artifacts: [out/report.txt]
   - name: self-check
     uses: review
     criteria:
