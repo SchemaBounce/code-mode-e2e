@@ -10,7 +10,7 @@ pipeline:
     uses: review
     context: fresh
     engine: codex
-    model: gpt-5.1-codex-mini
+    model: gpt-4.1-mini
     criteria:
       - { name: notes-updated, threshold: 0.5 }
 complete:
