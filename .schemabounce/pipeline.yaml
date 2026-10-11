@@ -3,13 +3,17 @@ kind: RepoPipeline
 pipeline:
   - name: breakdown
     uses: plan
-    maxUnits: 3
-    guidance: Plan at most three small units. Each unit edits NOTES.md or adds one file under docs/.
-  - name: sign-off
-    uses: approval
-    reads: [breakdown]
+    maxUnits: 2
+    guidance: Plan exactly two units. Unit one edits NOTES.md. Unit two only adds docs/usage.md and has docsOnly true.
   - forEach: breakdown.units
     steps:
+      - name: detail
+        uses: plan
+        maxUnits: 2
+        guidance: Break this one unit into exactly two small sub-steps, each with one acceptance criterion.
+      - name: unit-sign-off
+        uses: approval
+        reads: [detail]
       - uses: implement
       - name: unit-check
         uses: check
@@ -23,9 +27,5 @@ pipeline:
     uses: check
     commands:
       - { name: heading, run: sh tests/notes_heading.sh, severity: blocking }
-  - name: self-check
-    uses: review
-    criteria:
-      - { name: notes-updated, threshold: 0.5, blocking: false }
 complete:
   endpoint: branch
