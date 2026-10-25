@@ -1,0 +1,22 @@
+apiVersion: schemabounce.com/v1
+kind: RepoPipeline
+
+# Live proof of dec-206: both blocking checks are stopped by a sandbox limit
+# the platform observes itself, so the session must hold for a person instead
+# of spending fix turns.
+pipeline:
+  - name: implement
+    uses: implement
+  - name: limits
+    uses: check
+    commands:
+      - name: heap
+        run: node -e "const a=[];for(;;)a.push(new Array(1e6).fill(1))"
+        severity: blocking
+        timeout: 5m
+        env:
+          NODE_OPTIONS: '--max-old-space-size=64'
+      - name: network
+        run: npm view left-pad version --registry https://example.com/ --fetch-retries=0
+        severity: blocking
+        timeout: 3m
