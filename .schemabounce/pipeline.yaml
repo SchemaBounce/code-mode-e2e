@@ -3,11 +3,15 @@ kind: RepoPipeline
 setup:
   - { name: deps, run: "mkdir -p node_modules/dep && echo cached > node_modules/dep/index.js" }
 pipeline:
-  - name: edit
-    uses: implement
-  - name: suite
+  - name: one
+    uses: turn
+    guidance: Reply with the single word one. Do not read or change any files.
+  - name: two
+    uses: turn
+    guidance: Reply with the single word two. Do not read or change any files.
+  - name: gate
     uses: check
     commands:
-      - { name: suite, run: sh tests/run.sh, severity: blocking }
+      - { name: always-fails, run: "exit 1", severity: blocking }
 complete:
   endpoint: branch
