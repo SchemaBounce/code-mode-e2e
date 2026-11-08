@@ -1,0 +1,6 @@
+apiVersion: schemabounce.com/v1
+kind: RepoRuntime
+sandbox:
+  timeout: 10m
+  caches:
+    - preset: node
