@@ -5,5 +5,9 @@ setup:
 pipeline:
   - name: edit
     uses: implement
+  - name: suite
+    uses: check
+    commands:
+      - { name: suite, run: sh tests/run.sh, severity: blocking }
 complete:
   endpoint: branch
