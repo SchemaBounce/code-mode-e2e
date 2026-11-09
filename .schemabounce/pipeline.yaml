@@ -2,6 +2,10 @@ apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 setup:
   - { name: deps, run: "mkdir -p node_modules/dep && echo cached > node_modules/dep/index.js" }
+# Live proof of cache warm-ups (dec-284): a slow prebuild keeps a warm-up running
+# long enough for a session started meanwhile to see it.
+prebuild:
+  - { name: slow-build, run: "sleep 150" }
 pipeline:
   - name: edit
     uses: implement
