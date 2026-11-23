@@ -1,5 +1,8 @@
 apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 pipeline:
-  - name: implement
-    uses: implement
+  - uses: implement
+  - name: noop-check
+    uses: check
+    commands:
+      - { name: noop, run: "true", severity: blocking }
