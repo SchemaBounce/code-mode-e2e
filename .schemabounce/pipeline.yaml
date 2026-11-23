@@ -2,7 +2,10 @@ apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 pipeline:
   - uses: implement
-  - name: noop-check
+  - name: memhold-check
     uses: check
     commands:
-      - { name: noop, run: "true", severity: blocking }
+      - name: memhold
+        severity: blocking
+        run: |-
+          python3 -c "import time; b=bytearray(880*1024*1024); b[::4096]=b'x'*len(b[::4096]); time.sleep(20)"
