@@ -1,0 +1,5 @@
+apiVersion: schemabounce.com/v1
+kind: RepoRuntime
+sandbox:
+  size: xlarge
+  timeout: 30m
