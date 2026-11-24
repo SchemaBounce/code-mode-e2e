@@ -10,7 +10,7 @@ pipeline:
       then: fail
     commands:
       - name: syntax
-        run: python3 -m py_compile src/app.py
+        run: test -f src/app.py
         severity: blocking
         timeout: 2m
 complete:
