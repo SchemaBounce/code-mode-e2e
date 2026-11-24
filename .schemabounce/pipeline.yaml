@@ -1,12 +1,8 @@
 apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 pipeline:
-  - name: plan
-    uses: plan
-    maxUnits: 2
-  - forEach: plan.units
-    steps:
-      - uses: implement
+  - name: implement
+    uses: implement
   - name: validate
     uses: check
     onFail:
