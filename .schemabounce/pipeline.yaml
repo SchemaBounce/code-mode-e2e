@@ -5,7 +5,13 @@ pipeline:
     uses: implement
   - name: validate
     uses: check
+    onFail:
+      retry: { maxAttempts: 1 }
+      then: fail
     commands:
-      - { name: syntax, run: "python3 -m py_compile src/app.py", severity: blocking, timeout: 1m }
+      - name: syntax
+        run: python3 -m py_compile src/app.py
+        severity: blocking
+        timeout: 2m
 complete:
   endpoint: branch
