@@ -2,10 +2,9 @@ apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 pipeline:
   - uses: implement
-  - name: memhold-check
+  - name: image-check
     uses: check
     commands:
-      - name: memhold
+      - name: toolchain
         severity: blocking
-        run: |-
-          python3 -c "import time; b=bytearray(880*1024*1024); b[::4096]=b'x'*len(b[::4096]); time.sleep(20)"
+        run: python3 -c 'import sys; assert sys.version_info[:2] == (3, 12), sys.version; print("python", sys.version.split()[0])'
