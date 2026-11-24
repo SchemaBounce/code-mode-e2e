@@ -1,5 +1,6 @@
 apiVersion: schemabounce.com/v1
 kind: RepoRuntime
 sandbox:
-  size: xsmall
+  size: small
   timeout: 30m
+  image: python:3.12-slim
