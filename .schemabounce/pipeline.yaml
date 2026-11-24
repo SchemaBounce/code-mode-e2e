@@ -13,5 +13,9 @@ pipeline:
         run: test -f src/app.py
         severity: blocking
         timeout: 2m
+  - name: self-check
+    uses: review
+    criteria:
+      - { name: change-is-safe, threshold: 0.5, blocking: true }
 complete:
   endpoint: branch
