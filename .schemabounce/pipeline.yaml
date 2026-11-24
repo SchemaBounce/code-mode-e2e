@@ -3,5 +3,9 @@ kind: RepoPipeline
 pipeline:
   - name: implement
     uses: implement
+  - name: validate
+    uses: check
+    commands:
+      - { name: syntax, run: "python3 -m py_compile src/app.py", severity: blocking, timeout: 1m }
 complete:
   endpoint: branch
