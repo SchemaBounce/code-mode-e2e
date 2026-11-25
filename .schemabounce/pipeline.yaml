@@ -3,6 +3,13 @@ kind: RepoPipeline
 pipeline:
   - name: implement
     uses: implement
+  - name: validate
+    uses: check
+    commands:
+      - name: syntax
+        run: python3 -c "print('ok')"
+        severity: blocking
+        timeout: 2m
   - name: sign-off
     uses: approval
     reads: [implement]
