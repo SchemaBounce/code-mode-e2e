@@ -13,8 +13,10 @@ pipeline:
         run: test -f src/app.py
         severity: blocking
         timeout: 2m
-  - name: sign-off
-    uses: approval
-    reads: [implement]
+  - name: fresh-review
+    uses: review
+    context: fresh
+    criteria:
+      - { name: change-is-safe, threshold: 0.5, blocking: true }
 complete:
   endpoint: branch
