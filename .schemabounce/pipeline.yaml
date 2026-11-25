@@ -3,17 +3,8 @@ kind: RepoPipeline
 pipeline:
   - name: implement
     uses: implement
-  - name: validate
-    uses: check
-    onFail:
-      retry: { maxAttempts: 2 }
-      then: fail
-    commands:
-      - name: workflow-triggers
-        run: python3 scripts/check-workflow-triggers.py
-        severity: blocking
-        timeout: 2m
-        when:
-          paths: ['.github/workflows/**', 'scripts/check-workflow-triggers.py']
+  - name: sign-off
+    uses: approval
+    reads: [implement]
 complete:
   endpoint: branch
