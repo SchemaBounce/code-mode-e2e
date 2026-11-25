@@ -5,9 +5,12 @@ pipeline:
     uses: implement
   - name: validate
     uses: check
+    onFail:
+      retry: { maxAttempts: 1 }
+      then: fail
     commands:
       - name: syntax
-        run: python3 -c "print('ok')"
+        run: test -f src/app.py
         severity: blocking
         timeout: 2m
   - name: sign-off
