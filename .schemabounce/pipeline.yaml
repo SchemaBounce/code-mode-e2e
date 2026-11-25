@@ -15,5 +15,6 @@ pipeline:
         timeout: 2m
   - name: sign-off
     uses: approval
+    reads: [implement]
 complete:
   endpoint: branch
