@@ -1,0 +1,8 @@
+# Live proof of dec-354 (hooks as a check step): this hook fails until the
+# session adds OK_TOKEN.txt containing the word ready.
+if [ ! -f OK_TOKEN.txt ]; then
+  echo "pre-commit: OK_TOKEN.txt is missing. Create it containing the single word ready." >&2
+  exit 1
+fi
+grep -qx ready OK_TOKEN.txt || { echo "pre-commit: OK_TOKEN.txt must contain only the word ready." >&2; exit 1; }
+echo "pre-commit: ok"
