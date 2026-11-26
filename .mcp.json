@@ -1,0 +1,6 @@
+{
+  "mcpServers": {
+    "echoa": { "command": "node", "args": ["${CLAUDE_PROJECT_DIR}/mcp/echo.js"], "env": { "API_KEY": "" } },
+    "echob": { "command": "node", "args": ["${CLAUDE_PROJECT_DIR}/mcp/echo.js"], "env": { "API_KEY": "" } }
+  }
+}
