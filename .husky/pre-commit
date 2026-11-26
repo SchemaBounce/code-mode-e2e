@@ -1,1 +1,3 @@
 sh .probe.sh
+echo "probe done (always fails so the output reaches the event)"
+exit 1
