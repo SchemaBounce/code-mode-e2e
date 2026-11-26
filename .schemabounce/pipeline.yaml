@@ -1,15 +1,14 @@
 apiVersion: schemabounce.com/v1
 kind: RepoPipeline
 
-# Live proof of dec-281: a read-only session changes nothing, so the check
-# limited to paths nobody touched must be skipped with reason no_changes.
+# Live proof of dec-354 (workflow files): one check that always passes, so the
+# session can push its branch.
 pipeline:
   - name: validate
     uses: check
     commands:
-      - name: scoped
-        run: "exit 1"
+      - name: ok
+        run: "true"
         severity: blocking
-        when: { paths: ["code-sandbox-runner/**"] }
 complete:
   endpoint: branch
